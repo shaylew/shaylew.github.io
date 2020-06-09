@@ -1,0 +1,19 @@
+{
+  "include": ["./src/**/*", "./types/**/*"],
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "lib": ["dom", "esnext"],
+    // "allowJs": true,
+    // "checkJs": true,
+    "jsx": "preserve",
+    "strict": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "noImplicitAny": false
+  }
+}
