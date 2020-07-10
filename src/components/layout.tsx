@@ -1,75 +1,75 @@
 import React from 'react';
-import { Link, PageProps } from 'gatsby';
+import { PageProps } from 'gatsby';
 
-import { rhythm, scale } from '../utils/typography';
+import styled from 'styled-components';
+import { rhythm } from '../utils/typography';
+
+import SidebarContents from './sidebar';
+import PageHeader from './page-header';
 
 export type LayoutProps = {
   title: string;
   location: PageProps['location'];
 };
 
+const Wrapper = styled.div({
+  display: 'flex',
+  background: '#E3E7D3',
+});
+
+const Sidebar = styled.div({
+  position: 'sticky',
+  top: 0,
+  flex: 1,
+  minWidth: rhythm(12),
+  maxWidth: '35vw',
+  height: '100vh',
+  '&:after': {
+    content: '""',
+    height: '100%',
+    position: 'absolute',
+    top: 0,
+    width: `${rhythm(0.5)}`,
+    right: `-${rhythm(0.5)}`,
+    boxShadow: `${rhythm(0.5)} 0 ${rhythm(0.5)} -${rhythm(0.5)} inset`,
+  },
+});
+
+const Content = styled.div({
+  padding: `${rhythm(1.5)} ${rhythm(3)} 0`,
+  flex: 1,
+  display: 'flex',
+  flexDirection: 'column',
+});
+
+const Main = styled.main({
+  maxWidth: rhythm(24),
+  flex: 1,
+});
+
+const Footer = styled.footer({
+  textAlign: 'right',
+  marginBottom: rhythm(0.5),
+});
+
 const Layout: React.FC<LayoutProps> = props => {
   const { location, title, children } = props;
-  const rootPath = `${__PATH_PREFIX__}/`;
-  let header;
 
-  if (location.pathname === rootPath) {
-    header = (
-      <h1
-        style={{
-          ...scale(1.5),
-          marginBottom: rhythm(1.5),
-          marginTop: 0,
-        }}
-      >
-        <Link
-          style={{
-            boxShadow: `none`,
-            color: `inherit`,
-          }}
-          to={`/`}
-        >
-          {title}
-        </Link>
-      </h1>
-    );
-  } else {
-    header = (
-      <h3
-        style={{
-          fontFamily: `Montserrat, sans-serif`,
-          marginTop: 0,
-        }}
-      >
-        <Link
-          style={{
-            boxShadow: `none`,
-            color: `inherit`,
-          }}
-          to={`/`}
-        >
-          {title}
-        </Link>
-      </h3>
-    );
-  }
   return (
-    <div
-      style={{
-        marginLeft: `auto`,
-        marginRight: `auto`,
-        maxWidth: rhythm(24),
-        padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
-      }}
-    >
-      <header>{header}</header>
-      <main>{children}</main>
-      <footer>
-        © {new Date().getFullYear()}, Built with
-        {` `}
-        <a href="https://www.gatsbyjs.org">Gatsby</a>
-      </footer>
-    </div>
+    <Wrapper>
+      <Sidebar>
+        <SidebarContents />
+      </Sidebar>
+      <Content>
+        <PageHeader title={title} location={location} />
+        <Main>{children}</Main>
+        <Footer>
+          © {new Date().getFullYear()}, built with
+          {` `}
+          <a href="https://www.gatsbyjs.org">Gatsby</a>
+        </Footer>
+      </Content>
+    </Wrapper>
   );
 };
 

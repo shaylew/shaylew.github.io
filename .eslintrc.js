@@ -20,6 +20,13 @@ module.exports = {
     es6: true,
   },
   rules: {
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        varsIgnorePattern: '^_',
+        argsIgnorePattern: '^_',
+      },
+    ],
     "prettier/prettier": [
       "error",
       {

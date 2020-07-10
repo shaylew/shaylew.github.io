@@ -1,8 +1,8 @@
 {
-  "include": ["./src/**/*", "./types/**/*"],
+  "include": ["./src/**/*", "./src/types/**/*", "./*"],
   "compilerOptions": {
     "target": "esnext",
-    "module": "esnext",
+    "module": "commonjs",
     "moduleResolution": "node",
     "lib": ["dom", "esnext"],
     // "allowJs": true,
