@@ -65,7 +65,9 @@ const SideLinks = styled.nav({
   margin: `${rhythm(1.75)} ${rhythm(1)}`,
 });
 
-const SideLink = styled(Link)({
+const SideLink = styled(Link).attrs(_ => ({
+  activeClassName: 'sideLinkActive',
+}))({
   display: 'block',
   padding: `${rhythm(0.25)} 0`,
   margin: `${rhythm(1)} 0`,
@@ -88,9 +90,10 @@ const SideLink = styled(Link)({
     zIndex: -1,
     width: '25%',
     height: '100%',
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
-    transition: 'transform 0.5s',
+    backgroundColor: 'white',
+    transition: 'opacity 0.5s, transform 0s 0.5s',
     transform: 'rotate(-0.25turn)',
+    opacity: 0,
   },
   '&::before': {
     top: 0,
@@ -102,10 +105,12 @@ const SideLink = styled(Link)({
     right: 0,
     transformOrigin: 'top right',
   },
-  '&:hover, &:active': {
+  '&:hover': {
     color: 'inherit',
     '&::before, &::after': {
+      transition: 'transform 0.5s',
       transform: 'rotate(-0.15turn)',
+      opacity: 0.8,
     },
   },
 });
