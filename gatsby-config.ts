@@ -1,37 +1,19 @@
 export const siteMetadata = {
-  title: `Shay : [Idea] -> Code`,
+  title: `shaylew.is`,
+  siteUrl: `https://shaylew.is`,
   author: {
     name: `Shay Lewis`,
     pronouns: ['they', 'them', 'their', 'theirs', 'themself'],
-    summary: `who teleports around and conjures water.`,
+    // summary: `is a software engineer in Brooklyn, NY. They blog about functional programming, type systems, and more.`,
+    summary: `is a software engineer in Brooklyn, NY. They write about functional programming, type systems, and more.`,
   },
-  description: `A starter blog demonstrating what Gatsby can do.`,
-  siteUrl: `https://gatsby-starter-blog-demo.netlify.app/`,
+  description: `shaylew.is solving problems with code`,
   social: {
     twitter: `shaylews`,
     linkedin: 'shaylewis',
     github: 'shaylew',
   },
 };
-
-// used in .md and .mdx files.
-const gatsbyMarkdownPlugins = [
-  {
-    resolve: `gatsby-remark-images`,
-    options: {
-      maxWidth: 590,
-    },
-  },
-  {
-    resolve: `gatsby-remark-responsive-iframe`,
-    options: {
-      wrapperStyle: `margin-bottom: 1.0725rem`,
-    },
-  },
-  `gatsby-remark-prismjs`,
-  `gatsby-remark-copy-linked-files`,
-  `gatsby-remark-smartypants`,
-];
 
 export const plugins = [
   {
@@ -59,17 +41,33 @@ export const plugins = [
     resolve: `gatsby-plugin-mdx`,
     options: {
       extensions: ['.mdx', '.md'],
-      gatsbyRemarkPlugins: gatsbyMarkdownPlugins,
+      gatsbyRemarkPlugins: [
+        {
+          resolve: `gatsby-remark-images`,
+          options: {
+            maxWidth: 590,
+          },
+        },
+        {
+          resolve: `gatsby-remark-responsive-iframe`,
+          options: {
+            wrapperStyle: `margin-bottom: 1.0725rem`,
+          },
+        },
+        `gatsby-remark-prismjs`,
+        `gatsby-remark-copy-linked-files`,
+        `gatsby-remark-smartypants`,
+      ],
     },
   },
   `gatsby-transformer-sharp`,
   `gatsby-plugin-sharp`,
-  {
-    resolve: `gatsby-plugin-google-analytics`,
-    options: {
-      //trackingId: `ADD YOUR TRACKING ID HERE`,
-    },
-  },
+  // {
+  //   resolve: `gatsby-plugin-google-analytics`,
+  //   options: {
+  //     trackingId: `ADD YOUR TRACKING ID HERE`,
+  //   },
+  // },
   {
     resolve: 'gatsby-plugin-react-svg',
     options: {
@@ -84,8 +82,8 @@ export const plugins = [
     resolve: `gatsby-plugin-manifest`,
     options: {
       /* eslint-disable @typescript-eslint/camelcase */
-      name: `Gatsby Starter Blog`,
-      short_name: `Shay :: Dev`,
+      name: `shaylew.is`,
+      short_name: `Shay : Dev`,
       start_url: `/`,
       background_color: `#ffffff`,
       theme_color: `#663399`,

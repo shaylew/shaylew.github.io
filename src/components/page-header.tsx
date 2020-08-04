@@ -15,7 +15,8 @@ const HeaderLink = styled(Link)({
 });
 
 const Header = styled.header({
-  margin: `0 0 ${rhythm(1.5)}`,
+  padding: `${rhythm(1.5)} ${rhythm(3)} ${rhythm(0.5)}`,
+  marginBottom: rhythm(0.5),
   display: 'flex',
   alignItems: 'baseline',
   '& h1': {
@@ -39,10 +40,10 @@ const NavItem = styled.div({
   padding: `0 ${rhythm(0.25)}`,
 });
 
-const headerEntries = [
+const headerEntries: { title: string; slug: string }[] = [
   // { title: 'Blog', slug: '/blog' },
-  { title: 'About', slug: '/about' },
-  { title: 'Contact', slug: '/contact' },
+  // { title: 'Blog', slug: '/' },
+  // { title: 'About', slug: '/about' },
 ];
 
 const PageHeader: React.FC<PageHeaderProps> = props => {

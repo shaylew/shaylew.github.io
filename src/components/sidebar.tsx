@@ -1,5 +1,5 @@
 import React from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
+import { useStaticQuery, graphql, Link } from 'gatsby';
 import Image from 'gatsby-image';
 import styled from 'styled-components';
 
@@ -39,16 +39,74 @@ const BgImage = styled(Image)({
 const SideBio = styled.div({
   margin: `${rhythm(3)} auto`,
   width: 'min-content',
-  '& h1': {
+  '& > h1': {
     ...scale(1.5),
-    whiteSpace: 'nowrap',
+    width: 'max-content',
+    maxWidth: 'max(21rem, 35vw)',
+    padding: `0 ${rhythm(1)}`,
     textAlign: 'center',
     marginTop: 0,
     color: '#9abc66',
+    '& > a': {
+      textDecoration: 'none',
+      border: 'none',
+      color: 'inherit',
+      boxShadow: 'none',
+    },
   },
-  '& p': {
+  '& > p': {
     ...scale(0.1),
+    padding: `0 ${rhythm(1)}`,
     textAlign: 'justify',
+  },
+});
+
+const SideLinks = styled.nav({
+  margin: `${rhythm(1.75)} ${rhythm(1)}`,
+});
+
+const SideLink = styled(Link)({
+  display: 'block',
+  padding: `${rhythm(0.25)} 0`,
+  margin: `${rhythm(1)} 0`,
+
+  boxShadow: 'none',
+  border: 'solid 1.5px rgba(255, 255, 255, 0.8)',
+  borderRadius: 3,
+
+  textAlign: 'center',
+  color: 'inherit',
+  fontFamily: 'Montserrat,sans-serif',
+  textRendering: 'optimizeLegibility',
+  ...scale(0.25),
+
+  overflow: 'hidden',
+  position: 'relative',
+  '&::before, &::after': {
+    content: '""',
+    position: 'absolute',
+    zIndex: -1,
+    width: '25%',
+    height: '100%',
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    transition: 'transform 0.5s',
+    transform: 'rotate(-0.25turn)',
+  },
+  '&::before': {
+    top: 0,
+    left: 0,
+    transformOrigin: 'bottom left',
+  },
+  '&::after': {
+    bottom: 0,
+    right: 0,
+    transformOrigin: 'top right',
+  },
+  '&:hover, &:active': {
+    color: 'inherit',
+    '&::before, &::after': {
+      transform: 'rotate(-0.15turn)',
+    },
   },
 });
 
@@ -149,11 +207,14 @@ const Sidebar: React.FC = () => {
     <Wrapper>
       {sidebarImage && <BgImage fluid={sidebarImage}></BgImage>}
       <SideBio>
-        <h1>{author.name}</h1>
-        <p>
-          is a person whose website this is. They live in Brooklyn with their
-          zero cats.
-        </p>
+        <h1>
+          <Link to="/">{author.name}</Link>
+        </h1>
+        <p>{author.summary}</p>
+        <SideLinks>
+          <SideLink to="/about">About</SideLink>
+          <SideLink to="/projects">Projects</SideLink>
+        </SideLinks>
       </SideBio>
       <Socials>
         {socialMedia.map(info => {

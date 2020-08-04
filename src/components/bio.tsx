@@ -15,16 +15,11 @@ import { rhythm, scale } from '../utils/typography';
 import { BioStaticQuery, nullToPartial } from '../types/graphql';
 
 const Wrapper = styled.div({
-  // display: `flex`,
-  padding: rhythm(1.5),
+  ...scale(-0.15),
 });
 
-const Name = styled.h1({
-  ...scale(1.5),
-  marginBottom: rhythm(1.5),
-  marginTop: 0,
-  textAlign: 'center',
-  color: '#9abc66',
+const Name = styled.b({
+  ...scale(0),
 });
 
 const BioImage = styled(Image)({
@@ -35,14 +30,21 @@ const BioImage = styled(Image)({
   '& image': {
     borderRadius: `50%`,
   },
+  float: 'left',
 });
+
+const Summary = styled.span({});
+
+function capitalize(s: string): string {
+  return s.length === 0 ? s : s[0].toUpperCase() + s.slice(1);
+}
 
 const Bio: React.FC = () => {
   const data = useStaticQuery<BioStaticQuery>(graphql`
     query BioStatic {
       avatar: file(absolutePath: { regex: "/profile-pic.jpg/" }) {
         childImageSharp {
-          fixed(width: 50, height: 50) {
+          fixed(width: 64, height: 64) {
             ...GatsbyImageSharpFixed
           }
         }
@@ -70,17 +72,18 @@ const Bio: React.FC = () => {
   const { author, social } = data.site.siteMetadata;
   const { pronouns, name, summary } = nullToPartial(author);
 
+  const titleCaseNominal = capitalize((pronouns && pronouns[0]) ?? 'they');
+
   return (
     <Wrapper>
-      <Name>{author.name}</Name>
       <BioImage fixed={avatarFixed} alt={author.name} />
-      <p>
-        Written by <strong>{name}</strong> {summary}
-        {` `}
+      <Name>{name}</Name> <Summary>{summary}</Summary>
+      {` `}
+      {social.twitter && (
         <a href={`https://twitter.com/${social.twitter}`}>
-          You should follow {pronouns ? pronouns[1] : 'them'} on Twitter
+          {titleCaseNominal} can also be found on Twitter.
         </a>
-      </p>
+      )}
     </Wrapper>
   );
 };

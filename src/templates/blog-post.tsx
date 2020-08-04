@@ -31,6 +31,13 @@ const BlogPost = styled.article({
   '& > hr': {
     marginBottom: rhythm(1),
   },
+  '& > footer': {
+    margin: `${rhythm(1.5)} 0`,
+    padding: rhythm(1),
+    border: 'solid rgba(0, 0, 0, 0.2) 1px',
+    borderLeft: 'none',
+    borderRight: 'none',
+  },
 });
 
 const PrevNext = styled.nav({
@@ -73,7 +80,6 @@ const BlogPostTemplate: React.FC<BlogPostTemplateProps> = props => {
         <section>
           <MDXRenderer>{post.body}</MDXRenderer>
         </section>
-        <hr />
         <footer>
           <Bio />
         </footer>

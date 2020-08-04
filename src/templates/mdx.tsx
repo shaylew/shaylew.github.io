@@ -21,13 +21,18 @@ const BigmojiList = styled.div({
   },
 });
 
-const SkillList = styled.ul({
+const SkillList = styled.div({
+  width: 'min-content',
   '& > ul': {
-    display: 'block',
+    display: 'flex',
     borderColor: 'inherit',
+    margin: `${rhythm(0.5)} 0`,
   },
   '& > ul > li': {
-    display: 'inline',
+    textAlign: 'center',
+    display: 'block',
+    flexGrow: 1,
+    flexShrink: 0,
     borderStyle: 'solid',
     borderWidth: '1.5px',
     borderColor: 'inherit',

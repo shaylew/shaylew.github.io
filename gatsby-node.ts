@@ -1,11 +1,24 @@
 import path from 'path';
-import { GatsbyNode } from 'gatsby';
+import { GatsbyNode, NodePluginArgs, Page } from 'gatsby';
 import { createFilePath } from 'gatsby-source-filesystem';
 
-export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] = async ({
-  actions,
-}) => {
-  const { createTypes } = actions;
+const homePage = '/about';
+
+function maybeCreateHomePage<T>(args: NodePluginArgs, page: Page<T>): void {
+  if (page.path.replace(/\/$/, '') === homePage.replace(/\/$/, '')) {
+    args.actions.createPage({
+      ...page,
+      path: '/',
+    });
+  }
+}
+
+export const onCreatePage: GatsbyNode['onCreatePage'] = args => {
+  maybeCreateHomePage(args, args.page);
+};
+
+export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] = async args => {
+  const { createTypes } = args.actions;
   const typeDefs = `
     type Site implements Node {
       siteMetadata: SiteMetadata!
@@ -43,11 +56,11 @@ export const createSchemaCustomization: GatsbyNode['createSchemaCustomization'] 
   createTypes(typeDefs);
 };
 
-export const createPages: GatsbyNode['createPages'] = async ({
-  graphql,
-  actions,
-}) => {
-  const { createPage } = actions;
+export const createPages: GatsbyNode['createPages'] = async args => {
+  const {
+    graphql,
+    actions: { createPage },
+  } = args;
 
   const blogTemplate = path.resolve(`./src/templates/blog-post.tsx`);
   const pageTemplate = path.resolve(`./src/templates/top-level.tsx`);
@@ -98,22 +111,25 @@ export const createPages: GatsbyNode['createPages'] = async ({
 
   // Create top-level pages.
   topPages.forEach(page => {
-    createPage({
+    const pageInfo = {
       path: page.node.fields.slug,
       component: pageTemplate,
       context: {
         slug: page.node.fields.slug,
       },
-    });
+    };
+    createPage(pageInfo);
+    // If this is the homepage, also create it at path /.
+    maybeCreateHomePage(args, pageInfo);
   });
 };
 
-export const onCreateNode: GatsbyNode['onCreateNode'] = ({
-  node,
-  actions,
-  getNode,
-}) => {
-  const { createNodeField } = actions;
+export const onCreateNode: GatsbyNode['onCreateNode'] = args => {
+  const {
+    node,
+    getNode,
+    actions: { createNodeField },
+  } = args;
 
   if (node.internal.type === 'Mdx') {
     // Typings aren't generated yet while gatsby-node is running!

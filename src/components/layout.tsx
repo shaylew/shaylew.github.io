@@ -7,6 +7,9 @@ import { rhythm } from '../utils/typography';
 import SidebarContents from './sidebar';
 import PageHeader from './page-header';
 
+import GatsbyIcon from '../images/gatsby-icon.inline.svg';
+import TypescriptIcon from '../images/typescript-icon.inline.svg';
+
 export type LayoutProps = {
   title: string;
   location: PageProps['location'];
@@ -36,7 +39,6 @@ const Sidebar = styled.div({
 });
 
 const Content = styled.div({
-  padding: `${rhythm(1.5)} ${rhythm(3)} 0`,
   flex: 1,
   display: 'flex',
   flexDirection: 'column',
@@ -44,12 +46,27 @@ const Content = styled.div({
 
 const Main = styled.main({
   maxWidth: rhythm(24),
+  margin: `0 ${rhythm(3)} ${rhythm(1.5)}`,
   flex: 1,
 });
 
 const Footer = styled.footer({
-  textAlign: 'right',
-  marginBottom: rhythm(0.5),
+  height: rhythm(3),
+  margin: `0 ${-rhythm(3)}`,
+  padding: `0 ${rhythm(3)}`,
+  backgroundColor: '#f0f5df',
+  display: 'flex',
+  justifyContent: 'flex-end',
+  alignItems: 'center',
+  '& a': {
+    boxShadow: 'none',
+  },
+  '& svg': {
+    display: 'inline-block',
+    marginRight: rhythm(0.25),
+    height: rhythm(1),
+    verticalAlign: 'bottom',
+  },
 });
 
 const Layout: React.FC<LayoutProps> = props => {
@@ -64,9 +81,16 @@ const Layout: React.FC<LayoutProps> = props => {
         <PageHeader title={title} location={location} />
         <Main>{children}</Main>
         <Footer>
-          © {new Date().getFullYear()}, built with
-          {` `}
-          <a href="https://www.gatsbyjs.org">Gatsby</a>
+          <span>
+            © {new Date().getFullYear()}. Built with
+            {` `}
+            <a href="https://www.gatsbyjs.org">
+              <GatsbyIcon />
+            </a>
+            <a href="">
+              <TypescriptIcon />
+            </a>
+          </span>
         </Footer>
       </Content>
     </Wrapper>
