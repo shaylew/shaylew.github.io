@@ -38,6 +38,10 @@ export const plugins = [
     },
   },
   {
+    resolve: `gatsby-plugin-styled-components`,
+    options: {},
+  },
+  {
     resolve: `gatsby-plugin-mdx`,
     options: {
       extensions: ['.mdx', '.md'],
